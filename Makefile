@@ -49,19 +49,19 @@ clean-test: ## remove test and coverage artifacts
 lint: ## check style with flake8
 	isort -rc .
 	black .
-	flake8 .
-	pydocstyle knxproj tests
-	pylint knxproj
-	mypy knxproj
+	python -m flake8 .
+	python -m pydocstyle knxproj tests
+	python -m pylint knxproj
+	python -m mypy knxproj
 
 
 test: ## run tests quickly with the default Python
-	pytest
+	python -m pytest
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source knxproj -m pytest
-	coverage report -m
-	coverage html
+	python -m coverage run --source knxproj -m pytest
+	python -m coverage report -m
+	python -m coverage html
 	$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs

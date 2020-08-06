@@ -67,7 +67,9 @@ def main():
             ga_compare(gpa_dict[key], ets_dict[key])
         except KeyError:
             ga_missing = gpa_dict[key]
-            logging.error(f"GA in gpa but not ets: {ga_missing.get_ga_str()} - {ga_missing}!")
+            logging.error(
+                f"GA in gpa but not ets: {ga_missing.get_ga_str()} - {ga_missing}!"
+            )
 
 
 if __name__ == "__main__":

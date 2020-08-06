@@ -76,13 +76,13 @@ Ready to contribute? Here's how to set up `knxproj` for local development.
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8 and the
+5. When you're done making changes, check that your changes pass linting and the
    tests::
 
-    $ flake8 knxproj tests
-    $ python setup.py test or pytest
+    $ make lint
+    $ make test
 
-   To get flake8 just pip install it into your virtualenv.
+    Assuming you did a `pipenv install --dev`.
 
 6. Commit your changes and push your branch to GitHub::
 
