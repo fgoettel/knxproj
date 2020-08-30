@@ -3,6 +3,7 @@
 
 import logging
 import re
+import warnings
 from dataclasses import dataclass
 
 from .devices import Switch
@@ -72,7 +73,7 @@ class GT2(Switch):
         r"^(?P<nr>T11|T12|T11/12)(\s?(?P<duration>kurz|lang))?:\s(?P<description>.*)$"
     )
 
-    status_re = re.compile(r"^(?P<description>(Statustext|Meldung)\s.+)$")
+    status_re = re.compile(r"^(?P<description>(Statustext|Statuswert|Meldung)\s.+)$")
     led_re = re.compile(r"^LED\s(?P<description>.*)$")
 
     def __init__(self, texts, *args, **kwargs):
@@ -108,16 +109,17 @@ class GT2(Switch):
         # Match the lines of the text
         lines = set(self.texts)
 
-        # TODO: Switch w.r.t. layout
+        # TODO: Switch w.r.t. layout (2 or 3 per page)
         line0 = [_match_line(lines, self.line0_re), _match_line(lines, self.line3_re)]
         line1 = [_match_line(lines, self.line1_re), _match_line(lines, self.line4_re)]
         line2 = [_match_line(lines, self.line2_re), _match_line(lines, self.line5_re)]
 
-        # TODO: document status / LED
         line_status = _match_line(lines, self.status_re)
+        if line_status:
+            logging.info("%s has statustext/warnings activated.", self.name)
         line_led = _match_line(lines, self.led_re)
-        if line_status or line_led:
-            logging.info("%s has led and/or status message activated.", self.name)
+        if line_led:
+            logging.info("%s has led feedback activated.", self.name)
 
         # Assert there are no leftovers
         if lines:
