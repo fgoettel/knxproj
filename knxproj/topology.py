@@ -48,6 +48,7 @@ class Factory:
     def _find_connections(self, xml: Element) -> Tuple[List[str], List[str]]:
         """Find group addresses from a xml element."""
         # TODO: Combine connection information
+        # TODO: Refactor to refelct the text part
         groupaddress_list: List[str] = []
         text_list: List[str] = []
 

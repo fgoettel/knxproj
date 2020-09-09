@@ -74,7 +74,7 @@ class GT2(Switch):
     )
 
     status_re = re.compile(r"^(?P<description>(Statustext|Statuswert|Meldung)\s.+)$")
-    led_re = re.compile(r"^LED\s(?P<description>.*)$")
+    led_re = re.compile(r"^(?P<description>Status LED)$") # Not inside ComObjectInstanceRefs, but GroupObjectTree
 
     def __init__(self, texts, *args, **kwargs):
         """Create a MDT GT2."""
@@ -118,6 +118,7 @@ class GT2(Switch):
         if line_status:
             logging.info("%s has statustext/warnings activated.", self.name)
         line_led = _match_line(lines, self.led_re)
+        # TODO: check if the leds are covered
         if line_led:
             logging.info("%s has led feedback activated.", self.name)
 
